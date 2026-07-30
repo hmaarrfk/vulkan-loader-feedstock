@@ -4,6 +4,7 @@ mkdir build
 cd build
 
 # Vulkan ICD and layer manifests in conda environments are installed under `$PREFIX/share/vulkan`.
+# Ref: https://github.com/conda-forge/vulkan-tools-feedstock/pull/34#issuecomment-5126080861
 cmake ${CMAKE_ARGS} -GNinja \
   -DFALLBACK_DATA_DIRS="${PREFIX}/share:/usr/local/share:/usr/share" \
   ..
