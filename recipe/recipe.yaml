@@ -18,7 +18,7 @@ source:
     - disable_macos_framework.patch
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
@@ -51,6 +51,16 @@ tests:
         - if: win
           then: vulkan-1
           else: vulkan
+  - script:
+      # `$PREFIX/share` must end up in SYSCONFDIR, the part of the loader's
+      # compiled-in manifest search path that is consulted unconditionally.
+      # Otherwise conda-installed ICDs (mesa-lavapipe, mesa-anv, ...) are
+      # invisible whenever XDG_DATA_DIRS is set, which is the case in every
+      # desktop session.  The trailing `[^:]` is what distinguishes the
+      # standalone SYSCONFDIR string from the `$PREFIX/share:/usr/local/share:...`
+      # one baked in by FALLBACK_DATA_DIRS.
+      - if: unix
+        then: test -n "$(grep -al "${PREFIX}/share[^:]" ${PREFIX}/lib/libvulkan.so.1 ${PREFIX}/lib/libvulkan.1.dylib 2>/dev/null)"
 
 about:
   license: Apache-2.0
