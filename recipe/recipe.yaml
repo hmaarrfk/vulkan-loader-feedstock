@@ -16,9 +16,7 @@ source:
   sha256: 54f2537df22313768da0317dda2abdaaab7711b4081c48c869a79db343d0ae70
   patches:
     - disable_macos_framework.patch
-    # Two manifests naming the same driver library (a distro one with a relative
-    # `library_path`, a conda one with an absolute path) are scanned as two ICDs
-    # and report every physical device twice.  Dedup on the dlopen handle.
+    # https://github.com/KhronosGroup/Vulkan-Loader/issues/2017
     - dedup_icds_by_library_handle.patch
 
 build:
