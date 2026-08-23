@@ -22,7 +22,7 @@ source:
     - dedup_icds_by_library_handle.patch
 
 build:
-  number: 3
+  number: 2
 
 requirements:
   build:
